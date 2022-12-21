@@ -1,7 +1,16 @@
+altgraph==0.17.3
+cx-Freeze==6.13.1
 et-xmlfile==1.1.0
+idna==3.4
+importlib-metadata==5.2.0
+macholib==1.16.2
 numpy==1.23.5
 openpyxl==3.0.10
+packaging==22.0
 pandas==1.5.2
+pyinstaller==5.7.0
+pyinstaller-hooks-contrib==2022.14
 python-dateutil==2.8.2
 pytz==2022.7
 six==1.16.0
+zipp==3.11.0
