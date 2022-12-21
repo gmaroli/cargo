@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import pandas as pd
 from openpyxl import Workbook
 from datetime import datetime
@@ -54,7 +55,7 @@ df_raw['Reference'] = df_raw['Reference'].str.replace('NE', '').str.replace('IND
 # Step 1 : Get list of all states in the sheet.
 df_states = df_raw['City'].unique()
 
-
+"""
 # Function to create an empty Excel Sheet
 def create_workbook(path):
     currentdate = datetime.now().strftime('%Y%m%d%H%M%S')
@@ -78,3 +79,33 @@ for i in range(0, len(df_states)):
     with pd.ExcelWriter(excel_file_name, mode='a', if_sheet_exists='replace') as writer:
         df_1.to_excel(writer, sheet_name=state)
 # print(df_1)
+"""
+
+
+# NEW VERSION TO WRITE TO INDIVIDUAL EXCEL FILE
+def create_workbook(path):
+    currentdate = datetime.now().strftime('%Y%m%d%H%M%S')
+
+    # split the file name to append the current timestamp
+    # path = path + '.xlsx'
+    path = path.split('.')[0] + '_' + currentdate + '.xlsx'
+
+    workbook = Workbook()
+    workbook.save(path)
+    return path
+
+
+# for state in df_states:
+#     create_workbook(state)
+
+df_1 = pd.DataFrame([])
+for i in range(0, len(df_states)):
+    state = df_states[i]
+    print(state)
+    excel_file_name = create_workbook(state)
+    df_1 = df_raw.query('City=="' + state + '"')
+    df_1 = df_1.reset_index(drop=True)
+    df_1 = df_1.sort_values(by=['Reference'])
+    # print(df_1['City'])
+    with pd.ExcelWriter(excel_file_name, mode='a', if_sheet_exists='replace') as writer:
+        df_1.to_excel(writer, sheet_name=state)
